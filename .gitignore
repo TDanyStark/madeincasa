@@ -1,0 +1,43 @@
+# CodeIgniter 4 specific folders
+/writable/*
+/tests/*
+
+# Ignore everything in the application/logs directory
+# except the index.html file.
+/writable/logs/*
+!/writable/logs/index.html
+
+# Ignore everything in the public/uploads directory
+# except the index.html file.
+/public/uploads/*
+!/public/uploads/index.html
+
+# Ignore .env file
+.env
+
+# Ignore composer dependencies
+/vendor/*
+/composer.lock
+
+#ignore db
+db/
+
+# Ignore PHPStorm project files
+.idea/
+
+# Ignore node_modules directory
+/node_modules/
+
+/npm-debug.log
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore other IDEs
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore deployment files
+/deploy/
