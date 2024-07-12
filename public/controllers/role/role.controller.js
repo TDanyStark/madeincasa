@@ -31,6 +31,7 @@ var formData = new Object();
 var selectInsertOrUpdate = true;
 
 function toggleModule(moduleId, permitId) {
+  console.log(modules);
   const exists = 0
   const indexAcces = findAcces(moduleId)
   if (indexAcces >= exists) {
@@ -193,8 +194,8 @@ function delete_(id) {
 }
 
 function sendData(e, formObj) {
-  let obj = formObj;
-  sTForm = SingletonClassSTForm.getInstance();
+  let idForm = formObj;
+  const sTForm = SingletonClassSTForm.getInstance(idForm); 
   if (sTForm.validateForm()) {
     showPreload();
     if (selectInsertOrUpdate) {
@@ -218,7 +219,7 @@ function getDataId(idData, type) {
   selectInsertOrUpdate = false;
   formData[primaryId] = idData;
   url = URL_ROUTE + arRoutes[4];
-  sTForm = SingletonClassSTForm.getInstance();
+  sTForm = SingletonClassSTForm.getInstance(idForm);
   fetch(url, {
     method: "POST",
     body: JSON.stringify(formData),
@@ -285,7 +286,7 @@ function showModal(type) {
     const checkbox = document.querySelectorAll('input[type="checkbox"]');
     checkbox.forEach(item => item.removeAttribute('checked'))
     modules = []
-    sTForm = SingletonClassSTForm.getInstance();
+    sTForm = SingletonClassSTForm.getInstance(idForm);
     sTForm.inputButtonEnable();
     selectInsertOrUpdate = true;
     sTForm.FormEnableEdit();
@@ -302,20 +303,43 @@ function hidePreload() {
   $(".preloader").fadeOut();
 }
 
-var SingletonClassSTForm = (function () {
-  var objInstance;
-  function createInstance() {
-    var object = new STForm(idForm);
-    return object;
+class SingletonClassSTForm {
+
+  static instance = null;
+
+  // El constructor lanza un error para prevenir la creación directa de instancias
+  constructor() {
+    throw new Error('Use SingletonClassSTForm.getInstance()');
   }
-  return {
-    getInstance: function () {
-      if (!objInstance) {
-        objInstance = createInstance();
-      }
-      return objInstance;
+
+
+
+  // Método estático para obtener la instancia única
+  static getInstance(idForm) {
+    // Si no existe la instancia, se crea una nueva
+    if (!SingletonClassSTForm.instance) {
+      SingletonClassSTForm.instance = new STForm(idForm);
     }
+    // Se retorna la instancia única
+    return SingletonClassSTForm.instance;
   }
-})();
+}
+
+
+// var SingletonClassSTForm = (function () {
+//   var objInstance;
+//   function createInstance() {
+//     var object = new STForm(idForm);
+//     return object;
+//   }
+//   return {
+//     getInstance: function () {
+//       if (!objInstance) {
+//         objInstance = createInstance();
+//       }
+//       return objInstance;
+//     }
+//   }
+// })();
 
 document.getElementById('btn-info').href = infoUrl;

@@ -33,6 +33,8 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 /**Routes groups*/
+$routes->get('/', 'Home::show',['namespace' => 'App\Controllers\Home','filter'=>'appFilter']);
+
 $routes->group('home', ['namespace' => 'App\Controllers\Home','filter'=>'appFilter'], function ($routes) {
     $routes->get('/', 'Home::show',['as'=>'dashboard']);
     $routes->post('chart', 'Home::chart');
@@ -301,6 +303,15 @@ $routes->group('requests', ['namespace' => 'App\Controllers\Requests','filter'=>
     // $routes->post('delete', 'User::delete');
     // $routes->post('edit', 'User::edit');
     // $routes->post('update', 'User::update');
+});
+
+
+$routes->group('teams', ['namespace' => 'App\Controllers\Teams','filter'=>'appFilter'], function ($routes) {
+    $routes->get('/', 'Teams::show');
+    $routes->post('create', 'Teams::create');
+    $routes->post('delete', 'Teams::delete');
+    $routes->post('edit', 'Teams::edit');
+    $routes->post('update', 'Teams::update');
 });
 
 

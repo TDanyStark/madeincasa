@@ -92,6 +92,7 @@ class Role extends BaseController
             $data['response'] = ResponseInterface::HTTP_CONFLICT;
             $data['data'] = 'Error';
         }
+
         return json_encode($data);
     }
 
